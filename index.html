@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .zdog-canvas{
+            display: block;
+            margin: 0px auto;
+          
+        }
+    </style>
+   <style>
+        html,
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background: #000;     
+            background-image: url(bg.gif);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        canvas {
+            position: absolute;
+            width: 105%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<canvas class="zdog-canvas" width="1200" height="750"></canvas>
+<script>window.onerror = function(error, url, line) {parent.postMessage(["console", "❌ -- [ERROR] -- ❌ -- ⚠️ " + error], "*")};var cl = console.log;console.log = function () {var msg = [...arguments].join();parent.postMessage(["console", msg], "*");  }  </script><script crossorigin src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js">
+</script>
+<script>
+    
+    let canvas = new Zdog.Illustration({
+        element: ".zdog-canvas",
+        dragRotate: true,
+    });
+
+    var TAU = Zdog.TAU;
+
+    // color
+    // pupils
+    const colorFeatures = "#AB5C53";
+    // head_color
+    const black         = "#231C2F";
+    // shadow_color
+    const colorShadow   = "#C39B88";
+    // skin_color
+    const colorSkin     = "#E5C0AA";
+    // Colour of the outermost circle of the eye
+    const white         = "#FFF";
+
+
+
+    // All items that can be added to a Zdog scene act as anchor points。
+    const head = new Zdog.Anchor({
+        addTo: canvas,
+        translate: {
+            x: 0,
+            y: 30
+        },
+    });
+
+    // 继承Anchor。
+    const domepiece = new Zdog.Group({
+        addTo: head
+    });
+
+    const Head = new Zdog.RoundedRect({
+        addTo: domepiece,
+        width: 80,
+        height: 60,
+        stroke: 230,
+        cornerRadius: 40,
+        color: black,
+        path: [
+            { x: -4.5},
+            { x: 5.5 },
+            { y: -15 }
+          
+        ]
+    });
+
+
+    // Face-Group
+    const face = new Zdog.Group({
+        addTo: domepiece,
+       translate: {
+            x: 0,
+            y: 40,
+            z: 20
+        },
+    });
+
+   //shadow
+   const skinShadow = new Zdog.RoundedRect({
+        addTo: face,
+      width: 60,
+        height: 40,
+        stroke: 180,
+        cornerRadius: 40,
+        color: colorShadow,
+    });
+
+    // Face
+    const skin = new Zdog.RoundedRect({
+        addTo: face,
+        width: 60,
+        height: 30,
+       stroke: 170,
+        cornerRadius: 40,
+        color: colorSkin,
+        translate: {
+            y: 9.5
+        }
+    });
+
+
+    // eye👀，
+    var TAU = Zdog.TAU;
+    // Left_eye
+    const eyeleft = new Zdog.Anchor({
+        addTo: face,
+        translate: {
+            x: -76,
+            y: 6,
+            z: 80
+        },
+        rotate: {
+            y: TAU / 14
+        }
+    });
+
+    const eye = new Zdog.Group({
+        addTo: eyeleft
+    });
+
+    // outside eye
+    const iris = new Zdog.Ellipse({
+        addTo: eye,
+        fill: true,
+        width: 40,
+        height: 56,
+        stroke: 2,
+        scale: 1.5,
+        color: white,
+    });
+
+    // pupil
+    const pupil = new Zdog.Ellipse({
+        addTo: eye,
+        width: 37,
+        height: 56,
+        stroke: 0,
+        fill: true,
+        color: colorFeatures,
+        translate: {
+            x: 3,
+            y: 5,
+            z: 0
+        },
+    });
+
+    const anotherpupil = new Zdog.Ellipse({
+        addTo: pupil,
+        width: 10,
+        height: 10,
+        color: white,
+        fill: true,
+        stroke: 0,
+        translate: {
+            x: -7 ,
+            y: -12,
+            z: 3
+        }
+    });
+
+    // Copy-right-eye
+    const eyeright = eyeleft.copyGraph({
+         translate: {
+            x: 76,
+            y: 6,
+            z: 80
+        },
+        rotate: {
+            y: TAU / -14
+        }
+    });
+
+
+    // Nose
+    const nose = new Zdog.Ellipse({
+        addTo: face,
+        width: 6,
+        height: 6,
+        fill: true,
+        stroke: 10,
+        color: colorFeatures,
+        translate: {
+            x: 0,
+            y: 32,
+            z: 74
+        },
+    });
+
+
+    //mouse
+    const mouth = new Zdog.Ellipse({
+        addTo: face,
+        diameter: 30,
+        quarters: 2,
+        stroke: 4,
+        scale: {
+            x: 0.8,
+            y: 1
+        },
+        color: colorFeatures,
+        rotate: {
+            x: TAU / 2.3,
+            z: TAU / -4
+        },
+        translate: {
+            x: 0,
+            y: 46,
+            z: 74
+        },
+    });
+
+
+    //left-ear
+    const ear = new Zdog.Cone({
+        addTo: head,
+        // radium
+        diameter: 100,
+        // set length
+        length: 90,
+        stroke: false,
+        color: black,
+        translate: {
+            x: -150,
+            y: -105
+        },
+        rotate: {
+            x: TAU/5,
+            y: TAU/50
+        },
+    });
+
+    ear.copy({
+        translate: {
+            x: 150,
+            y: -105
+        },
+        rotate: {
+            x: TAU/5,
+            y: TAU/-50
+        },
+    });
+ 
+   function animate() {
+        // rotate illo each frame
+        if(canvas.y<=90)
+        {canvas.rotate.y += 0.03;}
+        else 
+        {canvas.rotate.y -= 0.02;}
+       
+        canvas.updateRenderGraph();
+        // animate next frame
+        requestAnimationFrame( animate );
+    }
+    // start animation
+    animate();
+   
+
+
+</script>
+  <canvas id="pinkboard"></canvas>
+    <script>
+        //  Setting the particles
+        var settings = {
+            particles: {
+                length: 500, // Maximum particle size
+                duration: 2, // particle duration in seconds
+                velocity: 100, // particle velocity in pixels per second
+                effect: -0.65, // effect on particle dispersion
+                size: 20, // particle size -- pixels
+            },
+        };
+ 
+        (function () 
+         { 
+          var b = 0; 
+          var c = ["ms", "moz", "webkit", "o"]; 
+                      for (var a = 0; 
+                           a < c.length && !window.requestAnimationFrame; 
+                           ++a) 
+                      {
+                        window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"]; 
+                       window.cancelAnimationFrame = window[c[a] + "CancelAnimationFrame"]|| 
+                         window[c[a] + "CancelRequestAnimationFrame"] } 
+                      if (!window.requestAnimationFrame) 
+                      { 
+                        window.requestAnimationFrame = function (h, e)
+                      { 
+                          var d = new Date().getTime(); 
+                          var f = Math.max(0, 16 - (d - b));
+                          var g = window.setTimeout(
+                            function () 
+                            { h(d + f) }, f); b = d + f; return g } } 
+                      if (!window.cancelAnimationFrame) 
+                      { window.cancelAnimationFrame = function (d) { clearTimeout(d) } } }());
+        //Point class
+        var Point = (function () {
+            function Point(x, y) {
+                this.x = (typeof x !== 'undefined') ? x : 0;
+                this.y = (typeof y !== 'undefined') ? y : 0;
+            }
+            Point.prototype.clone = function () {
+                return new Point(this.x, this.y);
+            };
+            Point.prototype.length = function (length) {
+                if (typeof length == 'undefined')
+                    return Math.sqrt(this.x * this.x + this.y * this.y);
+                this.normalize();
+                this.x *= length;
+                this.y *= length;
+                return this;
+            };
+            Point.prototype.normalize = function () {
+                var length = this.length();
+                this.x /= length;
+                this.y /= length;
+                return this;
+            };
+            return Point;
+        })();
+        //Particle Class
+        var Particle = (function () {
+            function Particle() {
+                this.position = new Point();
+                this.velocity = new Point();
+                this.acceleration = new Point();
+                this.age = 0;
+            }
+            Particle.prototype.initialize = function (x, y, dx, dy) {
+                this.position.x = x;
+                this.position.y = y;
+                this.velocity.x = dx;
+                this.velocity.y = dy;
+                this.acceleration.x = dx * settings.particles.effect;
+                this.acceleration.y = dy * settings.particles.effect;
+                this.age = 0;
+            };
+            Particle.prototype.update = function (deltaTime) {
+                this.position.x += this.velocity.x * deltaTime;
+                this.position.y += this.velocity.y * deltaTime;
+                this.velocity.x += this.acceleration.x * deltaTime;
+                this.velocity.y += this.acceleration.y * deltaTime;
+                this.age += deltaTime;
+            };
+            Particle.prototype.draw = function (context, image) {
+                function ease(t) {
+                    return (--t) * t * t + 1;
+                }
+                var size = image.width * ease(this.age / settings.particles.duration);
+                context.globalAlpha = 1 - this.age / settings.particles.duration;
+                context.drawImage(image, this.position.x - size / 2, this.position.y - size / 2, size, size);
+            };
+            return Particle;
+        })();
+      
+      
+        //Particle pool class
+        var ParticlePool = (function () {
+            var particles,
+                firstActive = 0,
+                firstFree = 0,
+                duration = settings.particles.duration;
+            function ParticlePool(length) {
+                // Create and fill a particle pool
+                particles = new Array(length);
+                for (var i = 0; i < particles.length; i++)
+                    particles[i] = new Particle();
+            }
+            ParticlePool.prototype.add = function (x, y, dx, dy) {
+                particles[firstFree].initialize(x, y, dx, dy);
+                // Handling circular queues
+                firstFree++;
+                if (firstFree == particles.length) firstFree = 0;
+                if (firstActive == firstFree) firstActive++;
+                if (firstActive == particles.length) firstActive = 0;
+            };
+            ParticlePool.prototype.update = function (deltaTime) {
+                var i;
+                // Reflesh
+                if (firstActive < firstFree) {
+                    for (i = firstActive; i < firstFree; i++)
+                        particles[i].update(deltaTime);
+                }
+                if (firstFree < firstActive) {
+                    for (i = firstActive; i < particles.length; i++)
+                        particles[i].update(deltaTime);
+                    for (i = 0; i < firstFree; i++)
+                        particles[i].update(deltaTime);
+                }
+                // delay old
+                while (particles[firstActive].age >= duration && firstActive != firstFree) {
+                    firstActive++;
+                    if (firstActive == particles.length) firstActive = 0;
+                }
+            };
+            ParticlePool.prototype.draw = function (context, image) {
+                // new
+                if (firstActive < firstFree) {
+                    for (i = firstActive; i < firstFree; i++)
+                        particles[i].draw(context, image);
+                }
+                if (firstFree < firstActive) {
+                    for (i = firstActive; i < particles.length; i++)
+                        particles[i].draw(context, image);
+                    for (i = 0; i < firstFree; i++)
+                        particles[i].draw(context, image);
+                }
+            };
+            return ParticlePool;
+        })();
+ 
+        //combine
+ 
+        (function (canvas) {
+            var context = canvas.getContext('2d'),
+                particles = new ParticlePool(settings.particles.length),
+                particleRate = settings.particles.length / settings.particles.duration, // particles/sec
+                time;
+            // draw heart
+            function pointOnHeart(t) {
+                return new Point(
+                    160 * Math.pow(Math.sin(t), 3),
+                    130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
+                );
+            }
+            // Creating particle images using the virtual canvas
+            var image = (function () {
+                var canvas = document.createElement('canvas'),
+                    context = canvas.getContext('2d');
+                canvas.width = settings.particles.size;
+                canvas.height = settings.particles.size;
+                // Helper functions for creating paths
+                function to(t) {
+                    var point = pointOnHeart(t);
+                    point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
+                    point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
+                    return point;
+                }
+                // create path
+                context.beginPath();
+                var t = -Math.PI;
+                var point = to(t);
+                context.moveTo(point.x, point.y);
+                while (t < Math.PI) {
+                    t += 0.01; // baby steps!
+                    point = to(t);
+                    context.lineTo(point.x, point.y);
+                }
+                context.closePath();
+                // fill
+                context.fillStyle = '#ff99ff';//color
+                context.fill();
+               
+                var image = new Image();
+                image.src = canvas.toDataURL();
+                return image;
+            })();
+            //render
+            function render() {
+                requestAnimationFrame(render);
+                var newTime = new Date().getTime() / 1000,
+                    deltaTime = newTime - (time || newTime);
+                time = newTime;
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                var amount = particleRate * deltaTime;
+                for (var i = 0; i < amount; i++) {
+                    var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                    var dir = pos.clone().length(settings.particles.velocity);
+                    particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+                }
+                particles.update(deltaTime);
+                particles.draw(context, image);
+            }
+            function onResize() 
+            {
+                canvas.width = canvas.clientWidth-300;
+                canvas.height = canvas.clientHeight-100;
+            }
+            window.onresize = onResize;
+            setTimeout( function () 
+                       {
+                onResize();
+                render();
+            }, 10);
+        })
+       (document.getElementById('pinkboard'));
+  
+ 
+</script>
+</body>
+</html>
