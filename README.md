@@ -29,3 +29,6 @@ particles, and of course resize the canvas at the end to add a delayed render th
 little smoother.
 The above is my interpretation of the project, the idea is to come from a child wrapped in 
 love to create a child who will always be wrapped in happiness and luck.
+
+VIDEO：
+https://youtu.be/2R6raxWDqo8
